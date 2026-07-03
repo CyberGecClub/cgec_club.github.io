@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cyber GEC Club</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#05192b;--panel:rgba(5,25,43,0.85);--cyan:#00d6ff;--green:#3effe6;
+  --text:#e0f7ff;--dim:#a5f0ff;--border:rgba(0,214,255,0.18);
+  --card:rgba(3,20,38,0.7);--slate:#0d2035;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;flex-direction:column}
+.page.active{display:flex}
+
+a{text-decoration:none;color:inherit}
+/* ── FLOATING NAVBAR (Upscayl style) ── */
+nav{
+  position:sticky;top:10px;z-index:200;
+  max-width:1100px;margin:10px auto 0;
+  display:flex;align-items:flex-start;justify-content:space-between;
+  padding:10px 20px;border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(5,15,28,0.6);backdrop-filter:blur(14px);
+  background-image:radial-gradient(rgba(0,0,0,0) 1px,rgba(5,20,40,0.55) 1px);
+  background-size:4px 4px;
+}
+.logo{font-size:1.1rem;font-weight:800;letter-spacing:1px;cursor:pointer;
+  background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-links{display:flex;gap:4px}
+.nav-links button,
+.nav-links a{background:none;border:none;color:var(--dim);font-size:0.82rem;font-weight:600;
+  padding:6px 14px;border-radius:999px;cursor:pointer;letter-spacing:0.4px;text-transform:uppercase;transition:all 0.15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.nav-links button:hover,.nav-links button.act,
+.nav-links a:hover,.nav-links a.act{color:var(--cyan);background:rgba(0,214,255,0.08)}
+.nav-right{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;border:none;
+  cursor:pointer;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;transition:all 0.2s}
+.btn-ghost{background:transparent;color:var(--cyan);border:1.5px solid rgba(0,214,255,0.35)}
+.btn-ghost:hover{background:rgba(0,214,255,0.1);border-color:var(--cyan)}
+.btn-cta{background:var(--cyan);color:#030f1b;box-shadow:0 4px 18px rgba(0,214,255,0.3)}
+.btn-cta:hover{background:#fff;transform:translateY(-2px)}
+.btn-success{background:#0f6e56;color:#3effe6;border:1px solid var(--green)}
+.btn-success:hover{background:#1d9e75}
+
+/* ── HERO ── */
+.hero-wrap{flex:1;position:relative;overflow:hidden}
+.glow-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob-1{width:500px;height:500px;background:rgba(8,72,124,0.6);top:-80px;left:-100px}
+.blob-2{width:400px;height:400px;background:rgba(0,214,255,0.08);bottom:0;right:-80px}
+.hero-inner{max-width:1100px;margin:0 auto;padding:50px 24px 60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;position:relative;z-index:2}
+.hero-tag{font-family:monospace;background:rgba(0,214,255,0.1);border:1px solid rgba(0,214,255,0.35);
+  color:var(--cyan);padding:5px 14px;border-radius:999px;display:inline-block;font-size:0.82rem;font-weight:bold;margin-bottom:14px}
+.hero-inner h1{font-size:2.8rem;line-height:1.18;color:#fff;margin-bottom:14px}
+.hero-inner h1 span{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-inner p{color:var(--dim);font-size:1rem;margin-bottom:24px;max-width:500px}
+.cta-group{display:flex;gap:12px;flex-wrap:wrap}
+.btn-hero{padding:11px 26px;border-radius:999px;font-size:0.9rem}
+
+/* TERMINAL */
+.terminal{background:#02111e;border:1px solid rgba(0,214,255,0.22);border-radius:14px;overflow:hidden;font-family:'Courier New',monospace}
+.term-bar{background:#041b2d;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(0,214,255,0.12)}
+.dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+.dot-r{background:#ff5f56}.dot-y{background:#ffbd2e}.dot-g{background:#27c93f}
+.term-title{color:#4a7a96;font-size:0.78rem;margin-left:auto;font-weight:bold}
+.term-body{padding:18px;height:220px;overflow-y:auto;color:var(--green);font-size:0.85rem;line-height:1.55}
+
+/* STAT ROW */
+.stat-row{display:flex;gap:28px;margin-top:28px;flex-wrap:wrap}
+.stat-n{font-size:1.5rem;font-weight:800;color:var(--cyan)}
+.stat-l{font-size:0.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em}
+
+/* ── SKILLS GRID ── */
+.skills-wrap{background:linear-gradient(180deg,var(--bg) 0%,#02111e 100%);padding:60px 24px}
+.section-label{text-align:center;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:8px}
+.section-label::after{content:'';display:block;width:44px;height:3px;background:var(--cyan);margin:10px auto 0;border-radius:2px}
+.section-sub{text-align:center;color:var(--dim);font-size:0.9rem;margin-bottom:36px}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:1100px;margin:0 auto}
+.pillar{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:26px;transition:all 0.2s;cursor:pointer}
+.pillar:hover{transform:translateY(-5px);border-color:var(--cyan);box-shadow:0 10px 30px rgba(0,214,255,0.12)}
+.pillar-icon{font-size:1.9rem;color:var(--cyan);margin-bottom:14px}
+.pillar h3{font-size:1.1rem;color:#fff;margin-bottom:8px}
+.pillar p{font-size:0.85rem;color:var(--dim)}
+
+/* BENTO FEATURES (Upscayl style) */
+.bento-wrap{padding:60px 24px;max-width:1100px;margin:0 auto}
+.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,220px);gap:14px}
+.bento-card{background:rgba(3,15,28,0.8);border:1px solid var(--border);border-radius:18px;padding:22px;
+  display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative;transition:all 0.2s;cursor:pointer;group:1}
+.bento-card:hover{border-color:var(--cyan);box-shadow:0 8px 24px rgba(0,214,255,0.1)}
+.bento-card:hover .bento-reveal{opacity:1;transform:translateY(0)}
+.bento-big{grid-row:span 2}
+.bento-card i{font-size:2.2rem;color:var(--dim);transition:all 0.2s}
+.bento-card:hover i{color:var(--cyan);transform:scale(0.8)}
+.bento-title{font-size:1rem;font-weight:600;color:#fff;margin-bottom:4px}
+.bento-desc{font-size:0.8rem;color:var(--dim)}
+.bento-reveal{position:absolute;bottom:0;left:0;right:0;padding:12px 22px;opacity:0;transform:translateY(10px);transition:all 0.2s;font-size:0.8rem;color:var(--cyan)}
+
+/* MARQUEE TESTIMONIALS */
+.marquee-wrap{padding:40px 0;overflow:hidden;position:relative}
+.marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:10;pointer-events:none}
+.marquee-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.marquee-track{display:flex;gap:14px;width:max-content;animation:marquee 28s linear infinite}
+.marquee-track-rev{animation-direction:reverse;animation-duration:32s;margin-top:14px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tcard{background:rgba(5,25,43,0.9);border:1px solid var(--border);border-radius:14px;padding:16px;width:260px;flex-shrink:0}
+.tcard-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tcard-av{width:32px;height:32px;border-radius:50%;background:rgba(0,214,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--cyan)}
+.tcard-name{font-size:0.85rem;font-weight:600;color:#fff}
+.tcard-handle{font-size:0.72rem;color:var(--dim)}
+.tcard blockquote{font-size:0.8rem;color:var(--dim);line-height:1.5}
+
+/* SCROLLING BRAND TEXT */
+.brand-scroll{overflow:hidden;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.brand-track{display:flex;gap:40px;width:max-content;animation:marquee 20s linear infinite}
+.brand-track span{font-size:5rem;font-weight:200;color:rgba(0,214,255,0.12);letter-spacing:2px;white-space:nowrap}
+
+/* ── AUTH ── */
+.auth-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;
+  background:radial-gradient(ellipse at 50% 0%,rgba(8,72,124,0.5),transparent 60%),var(--bg)}
+.auth-box{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:2.4rem;width:100%;max-width:420px;backdrop-filter:blur(12px)}
+.auth-box h2{font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:4px}
+.auth-box .auth-sub{color:var(--dim);font-size:0.85rem;margin-bottom:1.6rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.78rem;color:var(--dim);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+.field input{width:100%;background:rgba(2,17,30,0.8);border:1px solid var(--border);border-radius:10px;
+  padding:10px 14px;color:var(--text);font-size:0.9rem;outline:none;transition:border-color 0.15s;font-family:monospace}
+.field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,214,255,0.1)}
+.err{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#f87171;
+  padding:9px 14px;border-radius:10px;font-size:0.82rem;margin-bottom:1rem;display:none}
+.err.show{display:block}
+.full-btn{width:100%;padding:11px;font-size:0.9rem;justify-content:center}
+.hint{font-size:0.75rem;color:var(--dim);margin-top:0.9rem;text-align:center}
+.hint b{color:var(--text);font-family:monospace}
+
+/* ── DASHBOARD ── */
+.dash-layout{display:flex;flex:1;min-height:0}
+.sidebar{width:210px;background:rgba(2,11,22,0.9);border-right:1px solid var(--border);padding:1.2rem;
+  display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.sb-section{font-size:0.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin:10px 0 4px 8px}
+.sb-link{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:10px;cursor:pointer;
+  font-size:0.84rem;color:var(--dim);transition:all 0.15s;border:none;background:none;width:100%;text-align:left}
+.sb-link:hover,.sb-link.act{background:rgba(0,214,255,0.08);color:var(--cyan)}
+.sb-link i{font-size:15px;width:16px}
+.dash-content{flex:1;overflow-y:auto;padding:2rem}
+.dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.dash-head h2{font-size:1.25rem;font-weight:700;color:#fff}
+.metric-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.75rem}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+.metric-val{font-size:1.5rem;font-weight:800;color:var(--cyan)}
+.metric-lbl{font-size:0.72rem;color:var(--dim);margin-top:2px}
+.pbar{height:5px;background:rgba(0,214,255,0.1);border-radius:999px;margin-top:8px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:999px}
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;
+  cursor:pointer;transition:all 0.18s;position:relative;overflow:hidden}
+.mod-card:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mc-web::before{background:#6366f1}.mc-py::before{background:#f59e0b}.mc-net::before{background:#10b981}
+.mc-ai::before{background:#ec4899}.mc-cloud::before{background:#3b82f6}.mc-hack::before{background:#ef4444}
+.mc-sys::before{background:#8b5cf6}.mc-db::before{background:#14b8a6}
+.mod-title{font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:3px}
+.mod-meta{font-size:0.75rem;color:var(--dim)}
+.badge{display:inline-block;font-size:0.68rem;padding:2px 8px;border-radius:999px;margin-top:6px}
+.b-blue{background:rgba(59,130,246,0.15);color:#60a5fa}
+.b-green{background:rgba(16,185,129,0.15);color:#34d399}
+.b-amber{background:rgba(245,158,11,0.15);color:#fbbf24}
+.res-item{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;margin-bottom:8px;font-size:0.85rem;cursor:pointer;transition:border-color 0.15s}
+.res-item:hover{border-color:var(--cyan)}
+.res-item i{font-size:18px;color:var(--cyan)}
+.profile-head{display:flex;align-items:center;gap:1.2rem;background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:1.4rem;margin-bottom:1.5rem}
+.av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--green));
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;color:#030f1b;flex-shrink:0}
+.id-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(0,214,255,0.08);
+  border:1px solid rgba(0,214,255,0.25);color:var(--cyan);font-size:0.72rem;font-family:monospace;
+  padding:3px 10px;border-radius:999px;margin-top:5px}
+.settings-group{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.srow{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--border)}
+.srow:last-child{border-bottom:none}
+.srow-label{font-size:0.85rem;font-weight:600;color:#fff}
+.srow-sub{font-size:0.75rem;color:var(--dim)}
+.toggle{width:38px;height:20px;background:var(--cyan);border-radius:999px;position:relative;cursor:pointer;flex-shrink:0}
+.toggle::after{content:'';position:absolute;top:2px;right:2px;width:16px;height:16px;background:#030f1b;border-radius:50%}
+.toggle.off{background:rgba(0,214,255,0.15)}.toggle.off::after{right:auto;left:2px;background:#555}
+
+/* ABOUT / BLOG / PROJECTS */
+.page-wrap{max-width:1100px;margin:0 auto;padding:40px 24px;width:100%}
+.page-title{font-size:1.7rem;font-weight:700;color:#fff;margin-bottom:4px}
+.page-sub{color:var(--dim);font-size:0.88rem;margin-bottom:2rem}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:1.3rem;transition:border-color 0.15s}
+.card:hover{border-color:var(--cyan)}
+.card h3{font-size:0.95rem;font-weight:600;color:#fff;margin-bottom:6px}
+.card p{font-size:0.82rem;color:var(--dim);line-height:1.6}
+.card-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:1rem;color:var(--cyan);background:rgba(0,214,255,0.1)}
+.proj-tag{display:inline-block;background:rgba(0,214,255,0.1);color:var(--cyan);font-size:0.7rem;padding:2px 8px;border-radius:999px;margin-bottom:6px}
+.blog-tag{background:rgba(62,255,230,0.1);color:var(--green);font-size:0.7rem;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:6px}
+.blog-date{font-size:0.72rem;color:var(--dim)}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem;text-align:center}
+.team-av{width:48px;height:48px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem}
+.tl{position:relative;padding-left:2rem}
+.tl::before{content:'';position:absolute;left:6px;top:4px;bottom:0;width:2px;background:rgba(0,214,255,0.2)}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-dot{position:absolute;left:-1.65rem;top:5px;width:12px;height:12px;border-radius:50%;background:var(--cyan)}
+.tl-year{font-size:0.72rem;color:var(--cyan);font-weight:700;margin-bottom:2px}
+.tl-text{font-size:0.83rem;color:var(--dim)}
+.loading-row{color:var(--dim);font-size:0.85rem;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1s linear infinite;display:inline-block}
+
+/* FOOTER */
+footer{background:#020c19;border-top:1px solid var(--border);padding:40px 24px 24px;text-align:center}
+footer h4{color:#fff;font-size:1rem;margin-bottom:18px}
+.soc-row{display:flex;justify-content:center;gap:16px;margin-bottom:22px}
+.soc-link{width:46px;height:46px;border-radius:50%;background:rgba(0,214,255,0.08);border:1.5px solid rgba(0,214,255,0.25);
+  color:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none;transition:all 0.2s}
+.soc-link:hover{background:rgba(0,214,255,0.18);transform:translateY(-3px)}
+footer p{color:#4a7a96;font-size:0.82rem}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  .hero-inner{grid-template-columns:1fr}
+  .bento-grid{grid-template-columns:1fr}
+  .bento-big{grid-row:auto}
+  nav{max-width:96vw;padding:8px 12px}
+  .nav-links button{padding:5px 8px;font-size:0.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════ PAGE: HOME ══════════════════════════ -->
+<div class="page active" id="page-home">
+    <nav>
+    <a class="logo" href="index.html"><i class="fas fa-terminal"></i> CYBER GEC</a>
+    <div class="nav-links">
+      <a class="act" href="index.html">Home</a>
+      <a href="roadmap/cgec_roadmap.html">Roadmap</a>
+      <a href="cgec_calendar/cgec_calendar.html">Calendar</a>
+    </div>
+    <div class="nav-right">
+    <a class="btn btn-ghost" href="https://cybergecclub.github.io/">Learning Resources</a>
+      <a class="btn btn-cta" href="https://forms.cloud.microsoft/pages/responsepage.aspx?id=4UqAQunSt0Cko0WBEjQpixhELjPzO7NHrs_raqx5rINUMVJQWkpKU1VDRzZJUkY5WFc5QTZHS1dMUC4u&origin=lprLink&route=shorturl ">Sign Up</a>
+    </div>
+  </nav>
+
+  <div class="hero-wrap">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag"><i class="fas fa-shield-halved"></i> SECURING THE DIGITAL HORIZON</div>
+        <h1>Welcome to the<br><span>Cyber GEC Club!</span></h1>
+        <p>A dynamic, purpose-driven community where cybersecurity, AI and technology converge — empowering members to develop real-world skills, drive innovation, and create meaningful impact.</p>
+        <div class="cta-group">
+          <a href="https://gemini.google.com/app/c33be33687229155?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all#:~:text=https%3A%2F%2Fforms%2Ecloud%2Emicrosoft%2Fpages%2Fresponsepage%2Easpx%3Fid%3D4UqAQunSt0Cko0WBEjQpixhELjPzO7NHrs%5Fraqx5rINUMVJQWkpKU1VDRzZJUkY5WFc5QTZHS1dMUC4u%26origin%3DlprLink%26route%3Dshorturl"><button class="btn btn-cta btn-hero" onclick="go('login')"><i class="fas fa-user-plus"></i> Join Initiative</button></a>
+          <button class="btn btn-ghost btn-hero" onclick="go('projects')"><i class="fas fa-calendar-alt"></i> View Portfolio</button>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-n">240+</div><div class="stat-l">Members</div></div>
+          <div><div class="stat-n">8</div><div class="stat-l">Modules</div></div>
+          <div><div class="stat-n">50+</div><div class="stat-l">Projects Shipped</div></div>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="term-bar">
+          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+          <span class="term-title">bash — session_init.sh</span>
+        </div>
+        <div class="term-body" id="termBody">> Loading baseline modules...<br>> System active.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BENTO FEATURES -->
+  <div class="bento-wrap">
+    <div style="text-align:center;margin-bottom:32px">
+      <div class="section-label">Built for engineers who build things</div>
+      <div class="section-sub">Everything you need to go from zero to production-ready</div>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card bento-big">
+        <i class="fas fa-graduation-cap"></i>
+        <div><div class="bento-title">Virtual Classroom</div><div class="bento-desc">8 structured modules with live lectures, labs, and assignments — accessible from the member portal anytime.</div></div>
+        <div class="bento-reveal">→ Enter classroom</div>
+      </div>
+      <div class="bento-card">
+        <i class="fas fa-certificate"></i>
+        <div><div class="bento-title">Certifications</div><div class="bento-desc">Earn CGEC-verified certificates on completion of any module track.</div></div>
+        <div class="bento-reveal">→ View tracks</div>
+      </div>
+      <div class="bento-card">
+        <i class="fas fa-shield-halved"></i>
+        <div><div class="bento-title">CTF & Labs</div><div class="bento-desc">Live Capture-the-Flag competitions and hands-on pen-testing environments.</div></div>
+        <div class="bento-reveal">→ Join next CTF</div>
+      </div>
+      <div class="bento-card">
+        <i class="fas fa-users-gear"></i>
+        <div><div class="bento-title">Team Projects</div><div class="bento-desc">Semester-long collaborative builds, from network tools to AI models.</div></div>
+        <div class="bento-reveal">→ Browse projects</div>
+      </div>
+      <div class="bento-card">
+        <i class="fas fa-book-open"></i>
+        <div><div class="bento-title">Resource Library</div><div class="bento-desc">Curated lecture notes, lab guides, and datasets organized by module.</div></div>
+        <div class="bento-reveal">→ Open library</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS PILLARS -->
+  <div class="skills-wrap">
+    <div class="section-label">Our mission is to develop key skills in areas such as:</div>
+    <div class="section-sub" style="margin-bottom:32px">Every member picks a path. All paths lead to mastery.</div>
+    <div class="pillars" id="pillars"></div>
+  </div>
+
+  <!-- TESTIMONIALS MARQUEE -->
+  <!-- <div style="padding:40px 0 0">
+    <div style="text-align:center;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;color:var(--dim);margin-bottom:24px">WHAT OUR MEMBERS SAY</div>
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="mq1"></div>
+      <div class="marquee-track marquee-track-rev" id="mq2"></div>
+    </div>
+  </div> -->
+
+  <!-- BRAND SCROLL -->
+  <div class="brand-scroll">
+    <div class="brand-track">
+      <span>CGEC Club</span><span>·</span><span>CGEC Club</span><span>·</span>
+      <span>CGEC Club</span><span>·</span><span>CGEC Club</span><span>·</span>
+    </div>
+  </div>
+
+  <footer>
+    <h4>Follow us on social media:</h4>
+    <div class="soc-row">
+      <a href="#" class="soc-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.tiktok.com/@cgec.club?_r=1&_t=ZS-97ibZdBc4k1 " class="soc-link"><i class="fab fa-tiktok"></i></a>
+      <a href="#" class="soc-link"><i class="fab fa-youtube"></i></a>
+      <a href="#" class="soc-link"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" class="soc-link"><i class="fab fa-github"></i></a>
+    </div>
+    <p>© 2026 Cyber GEC Club. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════ PAGE: ABOUT ══════════════════════════ -->
+<div class="page" id="page-about">
+  <nav>
+    <div class="logo" onclick="go('home')"><i class="fas fa-terminal"></i> CGEC Club</div>
+    <div class="nav-links">
+      <button onclick="go('home')">Home</button><button class="act" onclick="go('about')">About</button>
+      <button onclick="go('projects')">Portfolio</button><button onclick="go('blog')">Blog</button>
+      <button onclick="go('contact')">Contact</button>
+    </div>
+    <div class="nav-right"><button class="btn btn-ghost" onclick="go('login')">Sign In</button><button class="btn btn-cta" onclick="go('login')">Sign Up</button></div>
+  </nav>
+  <div class="page-wrap">
+    <div class="page-title">About CGEC Club</div>
+    <div class="page-sub">A student-run engineering and cybersecurity community — founded 2022</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px">
+      <div style="color:var(--dim);font-size:0.9rem;line-height:1.9">
+        <p>CGEC Club is a dynamic, purpose-driven community where technology, cybersecurity, and artificial intelligence come together to foster learning, collaboration, and hands-on practice.</p>
+        <br><p>We empower members to develop real-world IT skills while driving innovation, strengthening digital security, and using technology to create meaningful impact in their community. Anyone enrolled at the institution can join — first-years to final-year.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:0.72rem;color:var(--cyan);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;font-weight:700">Club timeline</div>
+        <div class="tl">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2022</div><div class="tl-text">Founded with 12 members and 2 modules</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2023</div><div class="tl-text">Virtual classroom launched, grew to 100+ members</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2024</div><div class="tl-text">AI/ML and Ethical Hacking tracks added</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2025</div><div class="tl-text">240+ members, 8 modules, external partnerships</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="page-title" style="font-size:1.1rem;margin-bottom:14px">Executive Team</div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-av" style="background:rgba(0,214,255,0.15);color:var(--cyan)">AK</div><div style="font-size:0.9rem;font-weight:600;color:#fff">Adaeze Kalu</div><div style="font-size:0.75rem;color:var(--dim)">President</div></div>
+      <div class="team-card"><div class="team-av" style="background:rgba(62,255,230,0.15);color:var(--green)">EM</div><div style="font-size:0.9rem;font-weight:600;color:#fff">Emmanuel Mba</div><div style="font-size:0.75rem;color:var(--dim)">VP Technical</div></div>
+      <div class="team-card"><div class="team-av" style="background:rgba(245,158,11,0.15);color:#fbbf24">SI</div><div style="font-size:0.9rem;font-weight:600;color:#fff">Saratu Idris</div><div style="font-size:0.75rem;color:var(--dim)">VP Academic</div></div>
+      <div class="team-card"><div class="team-av" style="background:rgba(239,68,68,0.15);color:#f87171">CO</div><div style="font-size:0.9rem;font-weight:600;color:#fff">Chidi Obi</div><div style="font-size:0.75rem;color:var(--dim)">Secretary</div></div>
+      <div class="team-card"><div class="team-av" style="background:rgba(59,130,246,0.15);color:#60a5fa">FN</div><div style="font-size:0.9rem;font-weight:600;color:#fff">Fatima Nwosu</div><div style="font-size:0.75rem;color:var(--dim)">Web Lead</div></div>
+    </div>
+  </div>
+  <footer><p>© 2026 Cyber GEC Club. All rights reserved.</p></footer>
+</div>
+
+<!-- ══════════════════════════ PAGE: PROJECTS ══════════════════════════ -->
+<div class="page" id="page-projects">
+  <nav>
+    <div class="logo" onclick="go('home')"><i class="fas fa-terminal"></i> CGEC Club</div>
+    <div class="nav-links">
+      <button onclick="go('home')">Home</button><button onclick="go('about')">About</button>
+      <button class="act" onclick="go('projects')">Portfolio</button><button onclick="go('blog')">Blog</button>
+      <button onclick="go('contact')">Contact</button>
+    </div>
+    <div class="nav-right"><button class="btn btn-ghost" onclick="go('login')">Sign In</button><button class="btn btn-cta" onclick="go('login')">Sign Up</button></div>
+  </nav>
+  <div class="page-wrap">
+    <div class="page-title">Interactive Portfolio</div>
+    <div class="page-sub">Completed projects shipped by CGEC members</div>
+    <div class="card-grid" id="proj-grid"></div>
+  </div>
+  <footer><p>© 2026 CGEC Club. All rights reserved.</p></footer>
+</div>
+
+<!-- ══════════════════════════ PAGE: BLOG ══════════════════════════ -->
+<div class="page" id="page-blog">
+  <nav>
+    <div class="logo" onclick="go('home')"><i class="fas fa-terminal"></i> CGEC Club</div>
+    <div class="nav-links">
+      <button onclick="go('home')">Home</button><button onclick="go('about')">About</button>
+      <button onclick="go('projects')">Portfolio</button><button class="act" onclick="go('blog')">Blog</button>
+      <button onclick="go('contact')">Contact</button>
+    </div>
+    <div class="nav-right"><button class="btn btn-ghost" onclick="go('login')">Sign In</button><button class="btn btn-cta" onclick="go('login')">Sign Up</button></div>
+  </nav>
+  <div class="page-wrap">
+    <div class="page-title">Blog · News & Events</div>
+    <div class="page-sub">Latest from the CGEC community</div>
+    <div class="loading-row" id="blog-load"><span class="spin"><i class="fas fa-spinner"></i></span> Fetching latest posts from database…</div>
+    <div class="card-grid" id="blog-grid" style="display:none"></div>
+  </div>
+  <footer><p>© 2026 CGEC Club. All rights reserved.</p></footer>
+</div>
+
+<!-- ══════════════════════════ PAGE: CONTACT ══════════════════════════ -->
+<div class="page" id="page-contact">
+  <nav>
+    <div class="logo" onclick="go('home')"><i class="fas fa-terminal"></i> CGEC Club</div>
+    <div class="nav-links">
+      <button onclick="go('home')">Home</button><button onclick="go('about')">About</button>
+      <button onclick="go('projects')">Portfolio</button><button onclick="go('blog')">Blog</button>
+      <button class="act" onclick="go('contact')">Contact</button>
+    </div>
+    <div class="nav-right"><button class="btn btn-ghost" onclick="go('login')">Sign In</button><button class="btn btn-cta" onclick="go('login')">Sign Up</button></div>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <h2>Get in touch</h2>
+      <p class="auth-sub">Have a question or want to collaborate? Drop us a message.</p>
+      <div class="field"><label>Name</label><input type="text" placeholder="Your name"></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      <div class="field"><label>Message</label><textarea rows="4" style="width:100%;background:rgba(2,17,30,0.8);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:0.9rem;outline:none;font-family:inherit;resize:vertical" placeholder="How can we help?"></textarea></div>
+      <button class="btn btn-cta full-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+      <p class="hint">Or email us directly at <b>cgec@club.edu</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PAGE: LOGIN ══════════════════════════ -->
+<div class="page" id="page-login">
+  <nav>
+    <div class="logo" onclick="go('home')"><i class="fas fa-terminal"></i> CYBER GEC</div>
+    <div class="nav-links"><button onclick="go('home')">Home</button></div>
+    <div class="nav-right"><button class="btn btn-ghost" onclick="go('home')"><i class="fas fa-arrow-left"></i> Back</button></div>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <div style="font-family:monospace;font-size:0.78rem;color:var(--cyan);margin-bottom:8px">[ MEMBER PORTAL ]</div>
+      <h2>Authentication</h2>
+      <p class="auth-sub">Enter your CGEC credentials to access the secured dashboard</p>
+      <div class="err" id="login-err"><i class="fas fa-triangle-exclamation"></i> Invalid credentials — access denied. Retry.</div>
+      <div class="field"><label>Username</label><input type="text" id="uname" placeholder="e.g. student_2025"></div>
+      <div class="field"><label>Password</label><input type="password" id="upass" placeholder="••••••••"></div>
+      <button class="btn btn-cta full-btn" onclick="doLogin()"><i class="fas fa-terminal"></i> Sign In</button>
+      <p class="hint">Demo credentials: <b>admin</b> / <b>cgec2025</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PAGE: DASHBOARD ══════════════════════════ -->
+<div class="page" id="page-dashboard">
+  <nav>
+    <div class="logo" onclick="go('home')"><i class="fas fa-terminal"></i> CYBER GEC</div>
+    <div class="nav-links" id="dash-pills"></div>
+    <div class="nav-right">
+      <span style="font-size:0.78rem;color:var(--dim);margin-right:8px" id="sess-label"></span>
+      <button class="btn btn-ghost" onclick="doLogout()"><i class="fas fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </nav>
+  <div class="dash-layout">
+    <aside class="sidebar">
+      <div class="sb-section">Main</div>
+      <button class="sb-link act" id="sb-overview" onclick="dv('overview')"><i class="fas fa-gauge-high"></i> Overview</button>
+      <button class="sb-link" id="sb-classroom" onclick="dv('classroom')"><i class="fas fa-graduation-cap"></i> Classroom</button>
+      <button class="sb-link" id="sb-resources" onclick="dv('resources')"><i class="fas fa-books"></i> Resources</button>
+      <div class="sb-section">Account</div>
+      <button class="sb-link" id="sb-profile" onclick="dv('profile')"><i class="fas fa-user"></i> Profile</button>
+      <button class="sb-link" id="sb-settings" onclick="dv('settings')"><i class="fas fa-gear"></i> Settings</button>
+    </aside>
+    <main class="dash-content" id="dash-main"></main>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const PILLARS=[
+  {icon:'fa-unlock-keyhole',title:'Ethical Hacking',desc:'Real-world penetration analysis, threat simulation, and vulnerability assessment workflows.'},
+  {icon:'fa-brain',title:'Artificial Intelligence',desc:'State-of-the-art anomaly detection using Python scripting and machine learning automation.'},
+  {icon:'fa-cubes',title:'Infrastructure Security',desc:'Network protocols, firewall configuration, and OS kernel optimization deep-dives.'},
+  {icon:'fa-server',title:'System Administration',desc:'Managing complex IT infrastructures with a focus on security, reliability, and performance.'},
+  {icon:'fa-cloud',title:'Cloud Computing',desc:'Serverless deployment, AWS/Firebase strategies, scalable architecture design.'},
+  {icon:'fa-python fab',title:'Python Programming',desc:'Automation, data analysis, and security tooling with modern Python.'},
+  {icon:'fa-database',title:'Databases',desc:'Database design, SQL optimization, and security best practices in data management.'},
+  {icon:'fa-network-wired',title:'Network Security',desc:'Network architecture, protocols, and defensive measures against cyber threats.'},
+  {icon:'fa-microchip',title:'Machine Learning for Security',desc:'Applying ML techniques to detect, classify, and prevent emerging cyber threats.'},
+];
+const PROJECTS=[
+  {title:'Campus Network Monitor',desc:'Real-time dashboard tracking packet loss and bandwidth across the school LAN.',icon:'fa-topology-star',tag:'Networking'},
+  {title:'Student Grade Predictor',desc:'ML model trained on past results to forecast end-of-semester grades.',icon:'fa-brain',tag:'AI/ML'},
+  {title:'CGEC Club Portal v1',desc:'The original member management system — Flask + MySQL web app.',icon:'fa-globe',tag:'Web Dev'},
+  {title:'SecureScan CLI',desc:'Python CLI for network vulnerability scanning (educational use).',icon:'fa-shield-check',tag:'CyberSecurity'},
+  {title:'CloudTask Manager',desc:'Serverless to-do app deployed on Firebase with real-time sync.',icon:'fa-cloud',tag:'Cloud'},
+  {title:'Smart Attendance System',desc:'Automated attendance logging using facial recognition via OpenCV.',icon:'fa-camera',tag:'AI/ML'},
+];
+const BLOG=[
+  {title:'Recap: Ethical Hacking Workshop',tag:'Events',date:'Jun 10, 2025',desc:'Over 60 members joined a 3-hour live session on penetration testing basics using Kali Linux.'},
+  {title:'New AI/ML track launches July 2025',tag:'Announcements',date:'May 28, 2025',desc:'A dedicated AI & Machine Learning track with weekly labs and a capstone project.'},
+  {title:'How we built the Campus Network Monitor',tag:'Projects',date:'May 14, 2025',desc:'A behind-the-scenes walkthrough from the networking team on architecture and lessons learned.'},
+  {title:'Python Bootcamp — full recap',tag:'Events',date:'Apr 30, 2025',desc:'Four weekends, 40 participants, 20+ mini-projects submitted.'},
+  {title:'Semester 1 project showcase results',tag:'Announcements',date:'Apr 5, 2025',desc:'The top 3 projects from the first CGEC semester showcase are revealed.'},
+  {title:'Introduction to Cloud Computing',tag:'Tutorials',date:'Mar 18, 2025',desc:'A member-written primer on AWS vs Firebase vs Azure, zero-cost focus.'},
+];
+const MODULES=[
+  {id:'web',title:'Web Development',desc:'HTML, CSS, JS, React, Flask',lessons:12,badge:'b-blue',badgeText:'Beginner',cls:'mc-web',icon:'fa-code'},
+  {id:'py',title:'Python Programming',desc:'OOP, data structures, scripting',lessons:10,badge:'b-green',badgeText:'Beginner',cls:'mc-py',icon:'fa-python fab'},
+  {id:'net',title:'Networking & CyberSec',desc:'Protocols, firewalls, Wireshark',lessons:8,badge:'b-blue',badgeText:'Intermediate',cls:'mc-net',icon:'fa-network-wired'},
+  {id:'ai',title:'AI & Machine Learning',desc:'sklearn, TensorFlow, datasets',lessons:9,badge:'b-amber',badgeText:'Advanced',cls:'mc-ai',icon:'fa-brain'},
+  {id:'cloud',title:'Cloud Computing',desc:'AWS, Firebase, serverless',lessons:7,badge:'b-blue',badgeText:'Intermediate',cls:'mc-cloud',icon:'fa-cloud'},
+  {id:'hack',title:'Ethical Hacking',desc:'Kali Linux, pen testing basics',lessons:6,badge:'b-amber',badgeText:'Advanced',cls:'mc-hack',icon:'fa-unlock-keyhole'},
+  {id:'sys',title:'System Administration',desc:'Linux, bash scripting, servers',lessons:8,badge:'b-green',badgeText:'Intermediate',cls:'mc-sys',icon:'fa-server'},
+  {id:'db',title:'Database',desc:'SQL, MySQL, Firebase, indexes',lessons:7,badge:'b-blue',badgeText:'Beginner',cls:'mc-db',icon:'fa-database'},
+];
+const RESOURCES=[
+  {name:'Web Dev — Lecture 1.pdf',size:'2.4 MB',icon:'fa-file-pdf'},
+  {name:'Python Fundamentals.zip',size:'5.1 MB',icon:'fa-file-zipper'},
+  {name:'Lab 3: SQL Joins exercises',size:'340 KB',icon:'fa-file-lines'},
+  {name:'AI/ML Dataset — MNIST subset',size:'12 MB',icon:'fa-file-csv'},
+  {name:'Networking Slides Week 2',size:'3.8 MB',icon:'fa-file-powerpoint'},
+  {name:'Ethical Hacking Lab Guide',size:'1.2 MB',icon:'fa-file-pdf'},
+];
+const TESTIMONIALS=[
+  {av:'KA',name:'Kachi A.',handle:'@kachi_dev',text:'The ethical hacking module is insane — I went from zero knowledge to completing real CTF challenges in 8 weeks.'},
+  {av:'LO',name:'Lola O.',handle:'@lola_codes',text:'Best club I\'ve joined at GEC. The community is welcoming and the labs actually teach you something real.'},
+  {av:'EB',name:'Emeka B.',handle:'@em_bytes',text:'The Python bootcamp weekend was intense but so worth it. Shipped my first automation tool the same week.'},
+  {av:'FA',name:'Fatou A.',handle:'@fatou_ai',text:'AI/ML track is well structured. The lecturers know their stuff and the dataset labs are genuinely fun.'},
+  {av:'TI',name:'Taiwo I.',handle:'@taiwo_sec',text:'I love that this club is student-run. It feels real — not a watered down version of what industry does.'},
+  {av:'CN',name:'Chisom N.',handle:'@chisom_net',text:'Set up my first Linux server after the SysAdmin module. Never thought I\'d say that in my first year.'},
+];
+
+// ── RENDER HOME ──────────────────────────────────────────────────────────
+document.getElementById('pillars').innerHTML=PILLARS.map(p=>`
+  <div class="pillar">
+    <div class="pillar-icon"><i class="fas ${p.icon}"></i></div>
+    <h3>${p.title}</h3><p>${p.desc}</p>
+  </div>`).join('');
+
+function buildTCards(arr){
+  return arr.map(t=>`<div class="tcard"><div class="tcard-head"><div class="tcard-av">${t.av}</div><div><div class="tcard-name">${t.name}</div><div class="tcard-handle">${t.handle}</div></div></div><blockquote>${t.text}</blockquote></div>`).join('');
+}
+const dbl=TESTIMONIALS.concat(TESTIMONIALS);
+document.getElementById('mq1').innerHTML=buildTCards(dbl);
+document.getElementById('mq2').innerHTML=buildTCards([...dbl].reverse());
+
+// TERMINAL
+const termLines=[
+  '> Initializing connection to core network hub...',
+  '> Mapping structural learning pathways [OK]',
+  '> Loading core Linux CLI essentials profile...',
+  '> Loading Python log analyzer scripts...',
+  '> Verifying JWT session handler [OK]',
+  '> Status: Active — awaiting student onboarding.',
+  '> Ready for Strategy Session tomorrow 16:30!',
+];
+let li=0;const te=document.getElementById('termBody');
+function termTick(){if(li<termLines.length){te.innerHTML+=`<br>${termLines[li++]}`;te.scrollTop=te.scrollHeight;setTimeout(termTick,1400);}}
+setTimeout(termTick,900);
+
+// ── NAVIGATION ───────────────────────────────────────────────────────────
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='projects')buildProjects();
+  if(page==='blog')loadBlog();
+  if(page==='dashboard')renderDash('overview');
+}
+function doLogout(){go('home');}
+
+// ── PROJECTS ─────────────────────────────────────────────────────────────
+function buildProjects(){
+  document.getElementById('proj-grid').innerHTML=PROJECTS.map(p=>`
+    <div class="card" style="cursor:pointer">
+      <div class="card-icon"><i class="fas ${p.icon}"></i></div>
+      <div class="proj-tag">${p.tag}</div>
+      <h3>${p.title}</h3><p>${p.desc}</p>
+    </div>`).join('');
+}
+
+// ── BLOG ─────────────────────────────────────────────────────────────────
+function loadBlog(){
+  const ld=document.getElementById('blog-load'),gr=document.getElementById('blog-grid');
+  ld.style.display='flex';gr.style.display='none';
+  setTimeout(()=>{
+    ld.style.display='none';gr.style.display='grid';
+    gr.innerHTML=BLOG.map(b=>`
+      <div class="card" style="cursor:pointer">
+        <div class="blog-tag">${b.tag}</div>
+        <h3>${b.title}</h3>
+        <p>${b.desc}</p>
+        <div class="blog-date" style="margin-top:8px"><i class="fas fa-calendar-alt" style="font-size:11px"></i> ${b.date}</div>
+      </div>`).join('');
+  },900);
+}
+
+// ── AUTH ─────────────────────────────────────────────────────────────────
+function doLogin(){
+  const u=document.getElementById('uname').value.trim();
+  const p=document.getElementById('upass').value.trim();
+  const e=document.getElementById('login-err');
+  if(u==='admin'&&p==='cgec2025'){e.classList.remove('show');document.getElementById('sess-label').textContent='admin@cgec.club';go('dashboard');}
+  else{e.classList.add('show');document.getElementById('upass').value='';}
+}
+document.getElementById('upass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+// ── DASHBOARD ────────────────────────────────────────────────────────────
+function dv(v){
+  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('act'));
+  document.getElementById('sb-'+v).classList.add('act');
+  renderDash(v);
+}
+function renderDash(v){
+  const m=document.getElementById('dash-main');
+  if(v==='overview') m.innerHTML=`
+    <div class="dash-head"><h2><i class="fas fa-gauge-high" style="color:var(--cyan);margin-right:8px"></i>Overview</h2>
+      <button class="btn btn-cta" onclick="dv('classroom')"><i class="fas fa-graduation-cap"></i> Open Classroom</button></div>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-val">3</div><div class="metric-lbl">Active modules</div></div>
+      <div class="metric"><div class="metric-val">68%</div><div class="metric-lbl">Overall progress</div><div class="pbar"><div class="pfill" style="width:68%"></div></div></div>
+      <div class="metric"><div class="metric-val">14</div><div class="metric-lbl">Labs completed</div></div>
+      <div class="metric"><div class="metric-val">4</div><div class="metric-lbl">Resources saved</div></div>
+    </div>
+    <div style="font-size:0.82rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">Continue learning</div>
+    <div class="mod-grid">${MODULES.slice(0,4).map(m=>`
+      <div class="mod-card ${m.cls}" onclick="dv('classroom')">
+        <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:4px">${m.id.toUpperCase()}</div>
+        <div class="mod-title">${m.title}</div>
+        <div class="mod-meta">${m.lessons} lessons</div>
+        <div class="pbar"><div class="pfill" style="width:${30+Math.floor(Math.random()*50)}%"></div></div>
+      </div>`).join('')}</div>`;
+  else if(v==='classroom') m.innerHTML=`
+    <div class="dash-head"><h2><i class="fas fa-graduation-cap" style="color:var(--cyan);margin-right:8px"></i>Virtual Classroom</h2></div>
+    <div style="color:var(--dim);font-size:0.85rem;margin-bottom:16px">Select a module to access lectures, labs, and materials</div>
+    <div class="mod-grid">${MODULES.map(mo=>`
+      <div class="mod-card ${mo.cls}" onclick="openMod('${mo.id}','${mo.title}')">
+        <i class="fas ${mo.icon}" style="font-size:1.4rem;margin-bottom:8px;display:block;color:var(--dim)"></i>
+        <div class="mod-title">${mo.title}</div>
+        <div class="mod-meta">${mo.desc}</div>
+        <div class="mod-meta" style="margin-top:4px">${mo.lessons} lessons</div>
+        <span class="badge ${mo.badge}">${mo.badgeText}</span>
+      </div>`).join('')}
+    </div><div id="mod-detail" style="margin-top:18px"></div>`;
+  else if(v==='resources') m.innerHTML=`
+    <div class="dash-head"><h2><i class="fas fa-books" style="color:var(--cyan);margin-right:8px"></i>Resource Directory</h2></div>
+    <div style="color:var(--dim);font-size:0.85rem;margin-bottom:16px">Course documents, lectures, and practical lab files</div>
+    ${RESOURCES.map(r=>`
+      <div class="res-item"><i class="fas ${r.icon}"></i>
+        <div style="flex:1"><div style="font-size:0.85rem;font-weight:500;color:#fff">${r.name}</div><div style="font-size:0.72rem;color:var(--dim)">${r.size}</div></div>
+        <button class="btn btn-ghost" style="font-size:0.75rem;padding:5px 12px"><i class="fas fa-download"></i> Download</button>
+      </div>`).join('')}`;
+  else if(v==='profile') m.innerHTML=`
+    <div class="dash-head"><h2><i class="fas fa-user" style="color:var(--cyan);margin-right:8px"></i>Member Profile</h2></div>
+    <div class="profile-head">
+      <div class="av">A</div>
+      <div>
+        <div style="font-size:1.05rem;font-weight:700;color:#fff">Admin User</div>
+        <div style="font-size:0.8rem;color:var(--dim)">admin@cgec.club · Joined January 2025</div>
+        <div class="id-pill"><i class="fas fa-fingerprint" style="font-size:11px"></i> CGEC-2025-0001</div>
+      </div>
+    </div>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-val">3</div><div class="metric-lbl">Modules enrolled</div></div>
+      <div class="metric"><div class="metric-val" style="color:var(--green)">68%</div><div class="metric-lbl">Avg completion</div></div>
+      <div class="metric"><div class="metric-val" style="color:#fbbf24">14</div><div class="metric-lbl">Labs done</div></div>
+    </div>`;
+  else if(v==='settings') m.innerHTML=`
+    <div class="dash-head"><h2><i class="fas fa-gear" style="color:var(--cyan);margin-right:8px"></i>Settings</h2></div>
+    <div style="font-size:0.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Notifications</div>
+    <div class="settings-group">
+      <div class="srow"><div><div class="srow-label">Email notifications</div><div class="srow-sub">Receive emails for new posts and events</div></div><div class="toggle"></div></div>
+      <div class="srow"><div><div class="srow-label">Module reminders</div><div class="srow-sub">Weekly nudge to complete pending labs</div></div><div class="toggle off"></div></div>
+    </div>
+    <div style="font-size:0.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;margin-top:16px">Security</div>
+    <div class="settings-group">
+      <div class="srow"><div><div class="srow-label">Change password</div><div class="srow-sub">Last changed 30 days ago</div></div><button class="btn btn-ghost" style="font-size:0.78rem;padding:6px 14px">Update</button></div>
+      <div class="srow"><div><div class="srow-label">Active session</div><div class="srow-sub">JWT token issued at login — session active</div></div><button class="btn btn-ghost" style="font-size:0.78rem;padding:6px 14px;color:#f87171;border-color:rgba(239,68,68,0.3)">Revoke</button></div>
+    </div>`;
+}
+function openMod(id,title){
+  const d=document.getElementById('mod-detail');
+  d.innerHTML=`<div class="card" style="border-color:var(--cyan)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:1rem;font-weight:700;color:#fff">${title}</div>
+      <button class="btn btn-cta" style="font-size:0.78rem;padding:7px 14px"><i class="fas fa-play"></i> Start Lesson 1</button>
+    </div>
+    <div class="res-item"><i class="fas fa-file-pdf"></i>
+      <div style="flex:1"><div style="font-size:0.82rem;font-weight:500;color:#fff">${title} — Lecture Notes.pdf</div><div style="font-size:0.72rem;color:var(--dim)">Course document</div></div>
+      <button class="btn btn-ghost" style="font-size:0.75rem;padding:5px 10px"><i class="fas fa-download"></i></button>
+    </div>
+    <div class="res-item"><i class="fas fa-flask" style="color:var(--green)"></i>
+      <div style="flex:1"><div style="font-size:0.82rem;font-weight:500;color:#fff">Lab Exercise — Week 1</div><div style="font-size:0.72rem;color:var(--dim)">Practical lab</div></div>
+      <button class="btn btn-success" style="font-size:0.75rem;padding:5px 12px">Open Lab</button>
+    </div>
+  </div>`;
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+buildProjects();
+</script>
+</body>
+</html>
