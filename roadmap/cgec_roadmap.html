@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGEC Club — Learning Roadmaps</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#05192b;--panel:rgba(5,25,43,0.85);--cyan:#00d6ff;--green:#3effe6;
+  --surface:#0f1117;
+  --surface2:#141720;
+  --border:rgba(255,255,255,0.07);
+  --muted:#4a5368;
+  --text:#d8dce8;
+  --white:#f0f2f8;
+}
+a{text-decoration:none;color:inherit}
+
+/* Track accent colors */
+.t-cyber    {--c:#f7544f;--cg:rgba(247,84,79,.15)}
+.t-ai       {--c:#a78bfa;--cg:rgba(167,139,250,.15)}
+.t-ethical  {--c:#fb923c;--cg:rgba(251,146,60,.15)}
+.t-prog     {--c:#4ade80;--cg:rgba(74,222,128,.15)}
+.t-cloud    {--c:#38bdf8;--cg:rgba(56,189,248,.15)}
+.t-net      {--c:#f472b6;--cg:rgba(244,114,182,.15)}
+.t-db       {--c:#fbbf24;--cg:rgba(251,191,36,.15)}
+.t-linux    {--c:#e2e8f0;--cg:rgba(226,232,240,.12)}
+.t-sysadm   {--c:#34d399;--cg:rgba(52,211,153,.15)}
+.t-pentest  {--c:#f43f5e;--cg:rgba(244,63,94,.15)}
+.t-ml       {--c:#818cf8;--cg:rgba(129,140,248,.15)}
+.t-robotics {--c:#2dd4bf;--cg:rgba(45,212,191,.15)}
+.t-arduino  {--c:#60a5fa;--cg:rgba(96,165,250,.15)}
+
+nav{
+   position:sticky;top:10px;z-index:200;
+  max-width:1100px;margin:10px auto 0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px;border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(5,15,28,0.6);backdrop-filter:blur(14px);
+  background-image:radial-gradient(rgba(0,0,0,0) 1px,rgba(5,20,40,0.55) 1px);
+  background-size:4px 4px;
+}
+/* .logo{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--white);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+.logo i{color:#a78bfa}
+.nav-links{display:flex;gap:.5rem;flex-wrap:wrap}
+.nav-links a{display:inline-flex;align-items:center;gap:.3rem;padding:.65rem 1rem;border-radius:999px;border:none;background:none;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .15s}
+.nav-links a:hover,
+.nav-links a.act{color:var(--white);background:rgba(255,255,255,.08)}
+.nav-right{display:flex;gap:.5rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1rem;border-radius:999px;border:none;cursor:pointer;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;transition:all .2s;text-decoration:none}
+.btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.3)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:var(--white)}
+.btn-cta{background:var(--white);color:#07090e;box-shadow:0 4px 18px rgba(255,255,255,.2)}
+.btn-cta:hover{background:#f0f2f8;transform:translateY(-2px)} */
+.logo{font-size:1.1rem;font-weight:800;letter-spacing:1px;cursor:pointer;
+  background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-links{display:flex;gap:4px}
+.nav-links button,
+.nav-links a{background:none;border:none;color:var(--dim);font-size:0.82rem;font-weight:600;
+  padding:6px 14px;border-radius:999px;cursor:pointer;letter-spacing:0.4px;text-transform:uppercase;transition:all 0.15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.nav-links button:hover,.nav-links button.act,
+.nav-links a:hover,.nav-links a.act{color:var(--cyan);background:rgba(0,214,255,0.08)}
+.nav-right{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;border:none;
+  cursor:pointer;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;transition:all 0.2s}
+.btn-ghost{background:transparent;color:var(--cyan);border:1.5px solid rgba(0,214,255,0.35)}
+.btn-ghost:hover{background:rgba(0,214,255,0.1);border-color:var(--cyan)}
+.btn-cta{background:var(--cyan);color:#030f1b;box-shadow:0 4px 18px rgba(0,214,255,0.3)}
+.btn-cta:hover{background:#fff;transform:translateY(-2px)}
+.btn-success{background:#0f6e56;color:#3effe6;border:1px solid var(--green)}
+.btn-success:hover{background:#1d9e75}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ── */
+header{
+  text-align:center;
+  padding:5rem 2rem 3rem;
+  position:relative;
+  border-bottom:1px solid var(--border);
+}
+header::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 50% -10%,rgba(18, 222, 226, 0.08),transparent 70%);
+  pointer-events:none;
+}
+.header-eyebrow{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:.3rem .8rem;
+  margin-bottom:1.25rem;
+}
+header h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.5rem,6vw,5rem);
+  font-weight:800;letter-spacing:-2px;
+  color:var(--white);
+  line-height:1.05;
+  margin-bottom:.75rem;
+}
+header h1 .slash{color:rgba(146, 50, 50, 0.2)}
+header p{
+  max-width:500px;margin:0 auto;
+  color:var(--muted);font-size:.95rem;line-height:1.7;
+}
+
+/* ── TRACK GRID ── */
+.track-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:1px;
+  background:var(--border);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:50;
+}
+.track-tab{
+  background:var(--bg);
+  border:none;
+  padding:.85rem .5rem;
+  cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  transition:background .2s;
+  font-family:'Inter',sans-serif;
+}
+.track-tab:hover{background:var(--surface)}
+.track-tab.active{background:var(--surface2)}
+.track-tab.active .tab-dot{opacity:1;transform:scale(1)}
+.tab-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--c,#fff);
+  opacity:.35;transform:scale(.7);
+  transition:opacity .25s,transform .25s;
+}
+.tab-label{
+  font-size:.65rem;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);
+  transition:color .2s;
+  text-align:center;line-height:1.3;
+}
+.track-tab.active .tab-label{color:var(--c,var(--white))}
+
+/* ── MAIN CONTENT ── */
+.roadmap-area{
+  max-width:900px;margin:0 auto;
+  padding:3rem 2rem 6rem;
+}
+
+/* ── TRACK PANEL ── */
+.track-panel{display:none}
+.track-panel.active{display:block}
+
+.track-header{
+  display:flex;align-items:flex-start;gap:1.5rem;
+  padding:2rem;
+  background:var(--cg,rgba(255,255,255,.05));
+  border:1px solid color-mix(in srgb,var(--c,white) 20%,transparent);
+  border-radius:16px;
+  margin-bottom:2.5rem;
+}
+.track-icon{
+  font-size:2.2rem;line-height:1;
+  flex-shrink:0;
+}
+.track-header h2{
+  font-family:'Syne',sans-serif;
+  font-size:1.75rem;font-weight:800;
+  color:var(--white);letter-spacing:-.5px;
+  margin-bottom:.3rem;
+}
+.track-header .track-desc{
+  color:var(--muted);font-size:.9rem;line-height:1.65;
+}
+.track-header .duration-tag{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--c,var(--white));
+  margin-top:.75rem;
+}
+.track-header .duration-tag::before{
+  content:'';display:block;
+  width:18px;height:1px;
+  background:var(--c,white);
+  opacity:.5;
+}
+
+/* ── PHASES ── */
+.phase{
+  margin-bottom:2rem;
+  position:relative;
+}
+.phase::before{
+  content:'';
+  position:absolute;
+  left:18px;top:44px;bottom:0;
+  width:1px;
+  background:var(--border);
+}
+.phase:last-child::before{display:none}
+
+.phase-header{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:1.25rem;
+  cursor:pointer;
+  user-select:none;
+}
+.phase-num{
+  width:38px;height:38px;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--c,white) 30%,transparent);
+  background:var(--cg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;font-weight:600;
+  color:var(--c,var(--white));
+  flex-shrink:0;
+  transition:background .2s;
+}
+.phase-header:hover .phase-num{background:color-mix(in srgb,var(--c,white) 25%,transparent)}
+.phase-title{
+  font-family:'Syne',sans-serif;
+  font-size:1.05rem;font-weight:700;
+  color:var(--white);flex:1;
+}
+.phase-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:.2rem .5rem;
+}
+.phase-toggle{
+  color:var(--muted);font-size:.9rem;
+  transition:transform .3s;
+}
+.phase.open .phase-toggle{transform:rotate(180deg)}
+
+.phase-body{
+  padding-left:3.5rem;
+  display:none;
+}
+.phase.open .phase-body{display:block}
+
+/* ── SKILLS ── */
+.skill-list{
+  display:flex;flex-direction:column;gap:.6rem;
+  margin-bottom:1.5rem;
+}
+.skill-item{
+  display:flex;align-items:center;gap:.75rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:.7rem 1rem;
+  font-size:.875rem;
+  transition:border-color .2s,background .2s;
+}
+.skill-item:hover{
+  border-color:color-mix(in srgb,var(--c,white) 20%,transparent);
+  background:var(--surface2);
+}
+.skill-check{
+  width:18px;height:18px;
+  border-radius:50%;
+  border:1.5px solid var(--border);
+  flex-shrink:0;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,border-color .2s;
+}
+.skill-item.done .skill-check{
+  background:var(--c,white);
+  border-color:var(--c,white);
+}
+.skill-item.done .skill-check::after{
+  content:'✓';font-size:.6rem;color:var(--bg);font-weight:700;
+}
+.skill-item.done .skill-name{
+  text-decoration:line-through;
+  color:var(--muted);
+}
+.skill-name{flex:1;color:var(--text)}
+.skill-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:.15rem .4rem;border-radius:3px;
+  background:var(--cg);
+  color:var(--c,var(--muted));
+}
+
+/* Resources */
+.resources{
+  margin-top:.75rem;
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  margin-bottom:.5rem;
+}
+.res-link{
+  font-size:.72rem;font-weight:600;
+  font-family:'JetBrains Mono',monospace;
+  text-decoration:none;
+  color:var(--c,var(--text));
+  border:1px solid color-mix(in srgb,var(--c,white) 25%,transparent);
+  border-radius:4px;
+  padding:.2rem .6rem;
+  transition:background .2s;
+}
+.res-link:hover{background:var(--cg)}
+
+/* Progress bar */
+.progress-bar-wrap{
+  background:var(--border);
+  border-radius:100px;
+  height:4px;
+  margin-bottom:2rem;
+  overflow:hidden;
+}
+.progress-bar{
+  height:100%;
+  background:var(--c,white);
+  border-radius:100px;
+  transition:width .4s ease;
+}
+.progress-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;font-weight:600;
+  color:var(--muted);
+  margin-bottom:.5rem;
+  display:flex;justify-content:space-between;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .track-grid{grid-template-columns:repeat(4,1fr)}
+  .track-header{flex-direction:column;gap:.75rem}
+  .phase-body{padding-left:2.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="../index.html"><i class="fas fa-terminal"></i> CYBER GEC</a>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a class="act" href="cgec_roadmap.html">Roadmap</a>
+    <a href="../cgec_calendar/cgec_calendar.html">Calendar</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn-ghost" href="https://cybergecclub.github.io/">Learning Resources</a>
+    <a class="btn btn-cta" href="https://forms.cloud.microsoft/pages/responsepage.aspx?id=4UqAQunSt0Cko0WBEjQpixhELjPzO7NHrs_raqx5rINUMVJQWkpKU1VDRzZJUkY5WFc5QTZHS1dMUC4u&origin=lprLink&route=shorturl ">Register</a>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">CGEC Club · 2026</div>
+  <h1>Learning<br><span class="slash">//</span> Roadmaps</h1>
+  <p>Pick a track, follow the phases, check off skills as you go. Your progress is saved in this session.</p>
+</header>
+
+<!-- TRACK TABS -->
+<div class="track-grid" id="trackGrid"></div>
+
+<!-- ROADMAP AREA -->
+<div class="roadmap-area" id="roadmapArea"></div>
+
+<script>
+const tracks = [
+  {
+    id:'cyber', label:'Cybersecurity', icon:'🛡️', cls:'t-cyber',
+    duration:'6–12 months',
+    desc:'Master the fundamentals of securing systems, networks, and data. From theory to hands-on defense.',
+    phases:[
+      { title:'Foundations', badge:'Month 1–2', skills:[
+        {name:'Networking basics (OSI, TCP/IP, DNS, HTTP)', tag:'core'},
+        {name:'Linux command line essentials', tag:'core'},
+        {name:'How the internet works — protocols & packets', tag:'core'},
+        {name:'Intro to cryptography (hashing, symmetric, asymmetric)', tag:'core'},
+        {name:'CIA triad — Confidentiality, Integrity, Availability', tag:'theory'},
+      ], resources:[
+        {label:'TryHackMe — Pre-Security', href:'https://tryhackme.com'},
+        {label:'Professor Messer CompTIA+', href:'https://www.professormesser.com'},
+      ]},
+      { title:'Core Security Concepts', badge:'Month 3–4', skills:[
+        {name:'Firewalls, IDS/IPS and their configuration', tag:'defense'},
+        {name:'Authentication & access control (RBAC, MFA)', tag:'defense'},
+        {name:'Vulnerability scanning with Nessus / OpenVAS', tag:'tools'},
+        {name:'OWASP Top 10 vulnerabilities', tag:'web'},
+        {name:'Security Information & Event Management (SIEM)', tag:'tools'},
+      ], resources:[
+        {label:'OWASP Top 10', href:'https://owasp.org/Top10/'},
+        {label:'TryHackMe — SOC Level 1', href:'https://tryhackme.com'},
+      ]},
+      { title:'Hands-On Practice', badge:'Month 5–8', skills:[
+        {name:'CTF competitions (HackTheBox, PicoCTF)', tag:'practice'},
+        {name:'Build a home lab with VMs', tag:'lab'},
+        {name:'Wireshark packet analysis', tag:'tools'},
+        {name:'Malware analysis basics (static & dynamic)', tag:'advanced'},
+        {name:'Incident response procedures', tag:'advanced'},
+      ], resources:[
+        {label:'HackTheBox Academy', href:'https://academy.hackthebox.com'},
+        {label:'PicoCTF', href:'https://picoctf.org'},
+      ]},
+      { title:'Certifications & Specialization', badge:'Month 9–12', skills:[
+        {name:'CompTIA Security+ certification prep', tag:'cert'},
+        {name:'Digital forensics fundamentals', tag:'advanced'},
+        {name:'Cloud security concepts (AWS/Azure)', tag:'advanced'},
+        {name:'Write a security audit report', tag:'project'},
+        {name:'Contribute to an open source security tool', tag:'project'},
+      ], resources:[
+        {label:'CompTIA Security+', href:'https://www.comptia.org/certifications/security'},
+      ]},
+    ]
+  },
+  {
+    id:'ai', label:'Artificial Intelligence', icon:'🤖', cls:'t-ai',
+    duration:'6–10 months',
+    desc:'Understand how intelligence can be designed. From classical search algorithms to modern large language models.',
+    phases:[
+      { title:'Math & Python Foundations', badge:'Month 1–2', skills:[
+        {name:'Python for data science (NumPy, Pandas)', tag:'core'},
+        {name:'Linear algebra — vectors, matrices, dot products', tag:'math'},
+        {name:'Probability & statistics basics', tag:'math'},
+        {name:'Calculus — derivatives and gradient intuition', tag:'math'},
+        {name:'Jupyter notebooks & Colab workflow', tag:'tools'},
+      ], resources:[
+        {label:'3Blue1Brown — Linear Algebra', href:'https://www.3blue1brown.com'},
+        {label:'fast.ai Practical AI', href:'https://fast.ai'},
+      ]},
+      { title:'Classical AI', badge:'Month 3–4', skills:[
+        {name:'Search algorithms (BFS, DFS, A*)', tag:'algo'},
+        {name:'Game trees and minimax', tag:'algo'},
+        {name:'Knowledge representation & logic', tag:'theory'},
+        {name:'Naive Bayes, Decision Trees, SVMs', tag:'ml-classic'},
+        {name:'Scikit-learn pipelines', tag:'tools'},
+      ], resources:[
+        {label:'CS50 AI with Python', href:'https://cs50.harvard.edu/ai/'},
+      ]},
+      { title:'Neural Networks & Deep Learning', badge:'Month 5–7', skills:[
+        {name:'Perceptrons and the neural network model', tag:'dl'},
+        {name:'Backpropagation & gradient descent', tag:'dl'},
+        {name:'CNNs — image classification', tag:'dl'},
+        {name:'RNNs, LSTMs — sequential data', tag:'dl'},
+        {name:'PyTorch or TensorFlow training loops', tag:'tools'},
+      ], resources:[
+        {label:'Deep Learning Book', href:'https://deeplearningbook.org'},
+        {label:'PyTorch Tutorials', href:'https://pytorch.org/tutorials/'},
+      ]},
+      { title:'LLMs & Modern AI', badge:'Month 8–10', skills:[
+        {name:'Transformer architecture — attention mechanism', tag:'advanced'},
+        {name:'Fine-tuning pre-trained models (Hugging Face)', tag:'advanced'},
+        {name:'Prompt engineering techniques', tag:'applied'},
+        {name:'RAG systems and vector databases', tag:'applied'},
+        {name:'Build & deploy an AI-powered app', tag:'project'},
+      ], resources:[
+        {label:'Hugging Face Course', href:'https://huggingface.co/course'},
+        {label:'Andrej Karpathy — LLM from scratch', href:'https://github.com/karpathy/nanoGPT'},
+      ]},
+    ]
+  },
+  {
+    id:'ethical', label:'Ethical Hacking', icon:'💀', cls:'t-ethical',
+    duration:'6–10 months',
+    desc:'Learn to think like an attacker to defend like a pro. All techniques are for authorized testing only.',
+    phases:[
+      { title:'Hacker Mindset', badge:'Month 1–2', skills:[
+        {name:'Understanding scope, rules of engagement', tag:'ethics'},
+        {name:'Linux & terminal fluency', tag:'core'},
+        {name:'Networking deep dive — ports, services, routing', tag:'core'},
+        {name:'Introduction to Kali Linux', tag:'tools'},
+        {name:'Basic scripting (Bash, Python)', tag:'core'},
+      ], resources:[
+        {label:'TryHackMe — Jr Penetration Tester', href:'https://tryhackme.com'},
+        {label:'Kali Linux Revealed', href:'https://kali.org/book/kali-linux-revealed-1st-edition/'},
+      ]},
+      { title:'Reconnaissance & Scanning', badge:'Month 3–4', skills:[
+        {name:'Passive recon — OSINT, Shodan, Google Dorks', tag:'recon'},
+        {name:'Active scanning with Nmap', tag:'tools'},
+        {name:'Service enumeration (SMB, FTP, HTTP)', tag:'recon'},
+        {name:'Subdomain enumeration & directory busting', tag:'web'},
+        {name:'Vulnerability identification', tag:'core'},
+      ], resources:[
+        {label:'Nmap Reference Guide', href:'https://nmap.org/book/'},
+        {label:'OSINT Framework', href:'https://osintframework.com'},
+      ]},
+      { title:'Exploitation', badge:'Month 5–7', skills:[
+        {name:'Metasploit Framework fundamentals', tag:'tools'},
+        {name:'Web app attacks — SQLi, XSS, CSRF, IDOR', tag:'web'},
+        {name:'Password attacks — cracking, spraying', tag:'exploit'},
+        {name:'Buffer overflow basics (x86)', tag:'advanced'},
+        {name:'Post-exploitation — pivoting, persistence', tag:'exploit'},
+      ], resources:[
+        {label:'PortSwigger Web Security Academy', href:'https://portswigger.net/web-security'},
+        {label:'HackTheBox Labs', href:'https://hackthebox.com'},
+      ]},
+      { title:'Reporting & CEH Prep', badge:'Month 8–10', skills:[
+        {name:'Write a professional pentest report', tag:'project'},
+        {name:'Compile a proof-of-concept writeup', tag:'project'},
+        {name:'CEH or eJPT certification prep', tag:'cert'},
+        {name:'Bug bounty hunting (HackerOne, Bugcrowd)', tag:'real'},
+        {name:'Responsible disclosure practices', tag:'ethics'},
+      ], resources:[
+        {label:'HackerOne Hacker101', href:'https://www.hacker101.com'},
+        {label:'eJPT Certification', href:'https://ine.com/learning/certifications/internal/elearnsecurity-junior-penetration-tester'},
+      ]},
+    ]
+  },
+  {
+    id:'prog', label:'Programming', icon:'</>', cls:'t-prog',
+    duration:'4–8 months',
+    desc:'Python, JavaScript, C, C++ and beyond. Learn to think computationally and express ideas in code.',
+    phases:[
+      { title:'Python First', badge:'Month 1–2', skills:[
+        {name:'Variables, data types, control flow', tag:'python'},
+        {name:'Functions, scope, recursion', tag:'python'},
+        {name:'Lists, dicts, sets, tuples', tag:'python'},
+        {name:'OOP — classes, inheritance, dunder methods', tag:'python'},
+        {name:'File I/O, exception handling', tag:'python'},
+      ], resources:[
+        {label:'Python Docs', href:'https://docs.python.org/3/tutorial/'},
+        {label:'Automate the Boring Stuff', href:'https://automatetheboringstuff.com'},
+      ]},
+      { title:'C & System Thinking', badge:'Month 3–4', skills:[
+        {name:'Compiled vs interpreted — understanding compilation', tag:'c'},
+        {name:'Pointers, memory addresses, stack vs heap', tag:'c'},
+        {name:'Structs, unions, bitfields', tag:'c'},
+        {name:'Memory management — malloc, free', tag:'c'},
+        {name:'C++ OOP — classes, templates, STL', tag:'c++'},
+      ], resources:[
+        {label:'CS50x — Harvard', href:'https://cs50.harvard.edu/x/'},
+        {label:'LearnCpp.com', href:'https://www.learncpp.com'},
+      ]},
+      { title:'JavaScript & Web', badge:'Month 5–6', skills:[
+        {name:'DOM manipulation and events', tag:'js'},
+        {name:'Async JS — promises, async/await, fetch', tag:'js'},
+        {name:'ES6+ features (arrow fns, destructuring, modules)', tag:'js'},
+        {name:'Node.js basics & npm ecosystem', tag:'js'},
+        {name:'React fundamentals — components, state, hooks', tag:'js'},
+      ], resources:[
+        {label:'javascript.info', href:'https://javascript.info'},
+        {label:'The Odin Project', href:'https://theodinproject.com'},
+      ]},
+      { title:'Algorithms & Projects', badge:'Month 7–8', skills:[
+        {name:'Sorting algorithms & time complexity — Big O', tag:'algo'},
+        {name:'Data structures — linked lists, trees, graphs', tag:'algo'},
+        {name:'Dynamic programming basics', tag:'algo'},
+        {name:'Build a CLI tool in Python or C', tag:'project'},
+        {name:'Contribute to an open source project', tag:'project'},
+      ], resources:[
+        {label:'Neetcode — DSA Roadmap', href:'https://neetcode.io/roadmap'},
+        {label:'LeetCode', href:'https://leetcode.com'},
+      ]},
+    ]
+  },
+  {
+    id:'cloud', label:'Cloud Computing', icon:'☁️', cls:'t-cloud',
+    duration:'5–9 months',
+    desc:'Deploy, scale, and manage infrastructure in the cloud. AWS, Azure, GCP — pick one, master the concepts.',
+    phases:[
+      { title:'Cloud Fundamentals', badge:'Month 1–2', skills:[
+        {name:'What is cloud? IaaS, PaaS, SaaS models', tag:'core'},
+        {name:'Regions, availability zones, edge locations', tag:'core'},
+        {name:'Create your first AWS free-tier account', tag:'hands-on'},
+        {name:'EC2 instances — launch, connect, configure', tag:'aws'},
+        {name:'S3 buckets — storage, policies, static websites', tag:'aws'},
+      ], resources:[
+        {label:'AWS Skill Builder', href:'https://skillbuilder.aws'},
+        {label:'Cloud Guru — AWS Foundations', href:'https://acloudguru.com'},
+      ]},
+      { title:'Networking & Security', badge:'Month 3–4', skills:[
+        {name:'VPC — subnets, route tables, internet gateways', tag:'networking'},
+        {name:'IAM — users, roles, policies, least privilege', tag:'security'},
+        {name:'Security groups vs NACLs', tag:'security'},
+        {name:'HTTPS with ACM & load balancers', tag:'security'},
+        {name:'CloudWatch monitoring & alerts', tag:'ops'},
+      ], resources:[
+        {label:'AWS Well-Architected', href:'https://aws.amazon.com/architecture/well-architected/'},
+      ]},
+      { title:'Compute & Databases', badge:'Month 5–7', skills:[
+        {name:'Lambda — serverless functions', tag:'serverless'},
+        {name:'RDS — managed relational databases', tag:'db'},
+        {name:'DynamoDB — NoSQL at scale', tag:'db'},
+        {name:'Docker containers on ECS/EKS', tag:'containers'},
+        {name:'Kubernetes basics — pods, services, deployments', tag:'k8s'},
+      ], resources:[
+        {label:'Kubernetes Docs', href:'https://kubernetes.io/docs/'},
+        {label:'Docker Getting Started', href:'https://docs.docker.com/get-started/'},
+      ]},
+      { title:'DevOps & Certification', badge:'Month 8–9', skills:[
+        {name:'CI/CD pipelines — GitHub Actions / CodePipeline', tag:'devops'},
+        {name:'Infrastructure as Code — Terraform or CloudFormation', tag:'iac'},
+        {name:'AWS Solutions Architect Associate exam prep', tag:'cert'},
+        {name:'Deploy a full-stack app on the cloud', tag:'project'},
+        {name:'Cost optimization strategies', tag:'advanced'},
+      ], resources:[
+        {label:'AWS SAA Exam Guide', href:'https://aws.amazon.com/certification/certified-solutions-architect-associate/'},
+        {label:'Terraform Tutorials', href:'https://developer.hashicorp.com/terraform/tutorials'},
+      ]},
+    ]
+  },
+  {
+    id:'net', label:'Networking', icon:'📡', cls:'t-net',
+    duration:'4–7 months',
+    desc:'Understand how data moves around the world. Routing, switching, protocols — the backbone of everything.',
+    phases:[
+      { title:'Network Models', badge:'Month 1–2', skills:[
+        {name:'OSI model — all 7 layers with real examples', tag:'theory'},
+        {name:'TCP/IP stack vs OSI — where they differ', tag:'theory'},
+        {name:'IP addressing — IPv4, IPv6, subnetting', tag:'core'},
+        {name:'CIDR notation and subnet calculation', tag:'core'},
+        {name:'MAC addresses and ARP', tag:'core'},
+      ], resources:[
+        {label:'Cisco Networking Basics on NetAcad', href:'https://www.netacad.com'},
+        {label:'Subnet Calculator', href:'https://www.subnet-calculator.com'},
+      ]},
+      { title:'Protocols & Services', badge:'Month 3–4', skills:[
+        {name:'DNS — how domain resolution works end-to-end', tag:'protocol'},
+        {name:'DHCP, HTTP/S, FTP, SMTP, IMAP', tag:'protocol'},
+        {name:'TCP vs UDP — when each is used', tag:'protocol'},
+        {name:'TLS/SSL handshake deep dive', tag:'protocol'},
+        {name:'NAT and PAT', tag:'protocol'},
+      ], resources:[
+        {label:'Wireshark — The Official Guide', href:'https://www.wireshark.org/docs/'},
+      ]},
+      { title:'Routing & Switching', badge:'Month 5–6', skills:[
+        {name:'Static vs dynamic routing', tag:'routing'},
+        {name:'OSPF, BGP, EIGRP overview', tag:'routing'},
+        {name:'VLANs and 802.1Q trunking', tag:'switching'},
+        {name:'Spanning Tree Protocol (STP)', tag:'switching'},
+        {name:'Cisco Packet Tracer labs', tag:'lab'},
+      ], resources:[
+        {label:'Packet Tracer Download', href:'https://www.netacad.com/courses/packet-tracer'},
+        {label:'Professor Messer Net+', href:'https://www.professormesser.com/network-plus/'},
+      ]},
+      { title:'CompTIA Network+', badge:'Month 7', skills:[
+        {name:'Network+ exam domain review', tag:'cert'},
+        {name:'Troubleshooting methodology', tag:'practical'},
+        {name:'WAN technologies (MPLS, SD-WAN)', tag:'advanced'},
+        {name:'Network monitoring tools (SNMP, NetFlow)', tag:'tools'},
+        {name:'Build a virtual home network lab', tag:'project'},
+      ], resources:[
+        {label:'CompTIA Network+', href:'https://www.comptia.org/certifications/network'},
+      ]},
+    ]
+  },
+  {
+    id:'db', label:'Databases', icon:'🗄️', cls:'t-db',
+    duration:'4–6 months',
+    desc:'Design, query, and optimize databases. From relational models to distributed NoSQL systems.',
+    phases:[
+      { title:'Relational Databases', badge:'Month 1–2', skills:[
+        {name:'Database design — ER diagrams, normalization (1NF→3NF)', tag:'design'},
+        {name:'SQL fundamentals — SELECT, JOIN, GROUP BY, subqueries', tag:'sql'},
+        {name:'Primary keys, foreign keys, constraints', tag:'core'},
+        {name:'Indexes — how they work and when to use them', tag:'perf'},
+        {name:'Transactions, ACID properties', tag:'core'},
+      ], resources:[
+        {label:'SQLBolt — Interactive SQL', href:'https://sqlbolt.com'},
+        {label:'pgExercises', href:'https://pgexercises.com'},
+      ]},
+      { title:'PostgreSQL & MySQL', badge:'Month 3', skills:[
+        {name:'Install and configure PostgreSQL', tag:'postgres'},
+        {name:'psql CLI — query, inspect, manage', tag:'postgres'},
+        {name:'Stored procedures & triggers', tag:'advanced'},
+        {name:'Database backup & restore', tag:'ops'},
+        {name:'Query optimization & EXPLAIN ANALYZE', tag:'perf'},
+      ], resources:[
+        {label:'PostgreSQL Official Docs', href:'https://www.postgresql.org/docs/'},
+      ]},
+      { title:'NoSQL & Modern Patterns', badge:'Month 4–5', skills:[
+        {name:'Document stores — MongoDB, query patterns', tag:'nosql'},
+        {name:'Key-value stores — Redis, caching strategies', tag:'nosql'},
+        {name:'When to use SQL vs NoSQL', tag:'design'},
+        {name:'Time-series databases (InfluxDB basics)', tag:'advanced'},
+        {name:'Database connection pools and ORMs', tag:'tools'},
+      ], resources:[
+        {label:'MongoDB University', href:'https://university.mongodb.com'},
+        {label:'Redis University', href:'https://university.redis.com'},
+      ]},
+      { title:'Scale & Projects', badge:'Month 6', skills:[
+        {name:'Replication and read replicas', tag:'scale'},
+        {name:'Sharding strategies', tag:'scale'},
+        {name:'Database security — SQL injection prevention', tag:'security'},
+        {name:'Design a database schema for a real app', tag:'project'},
+        {name:'Performance-tune a slow query set', tag:'project'},
+      ], resources:[
+        {label:'Use The Index, Luke!', href:'https://use-the-index-luke.com'},
+      ]},
+    ]
+  },
+  {
+    id:'linux', label:'Linux', icon:'🐧', cls:'t-linux',
+    duration:'3–5 months',
+    desc:'Get comfortable in the terminal. Linux is the OS of servers, security, and serious development.',
+    phases:[
+      { title:'Terminal Survival', badge:'Month 1', skills:[
+        {name:'File system hierarchy — /, /etc, /var, /home', tag:'core'},
+        {name:'Navigation — ls, cd, pwd, find, tree', tag:'cli'},
+        {name:'File operations — cp, mv, rm, mkdir, touch', tag:'cli'},
+        {name:'Permissions — chmod, chown, sticky bits', tag:'core'},
+        {name:'Text editing — nano and vim basics', tag:'tools'},
+      ], resources:[
+        {label:'Linux Journey', href:'https://linuxjourney.com'},
+        {label:'The Linux Command Line (book)', href:'https://linuxcommand.org/tlcl.php'},
+      ]},
+      { title:'Users, Processes & Packages', badge:'Month 2', skills:[
+        {name:'User & group management — useradd, passwd, sudoers', tag:'admin'},
+        {name:'Process management — ps, top, kill, jobs, &', tag:'processes'},
+        {name:'Package managers — apt, yum, pacman, snap', tag:'packages'},
+        {name:'Cron jobs and systemd timers', tag:'automation'},
+        {name:'Environment variables and .bashrc / .zshrc', tag:'config'},
+      ], resources:[
+        {label:'OverTheWire Bandit (Linux wargame)', href:'https://overthewire.org/wargames/bandit/'},
+      ]},
+      { title:'Networking & Scripting', badge:'Month 3–4', skills:[
+        {name:'Network config — ip addr, ss, netstat, nmcli', tag:'networking'},
+        {name:'SSH — keygen, config, port forwarding', tag:'tools'},
+        {name:'Bash scripting — variables, loops, conditionals', tag:'bash'},
+        {name:'Piping, redirection, grep, awk, sed', tag:'cli'},
+        {name:'Log management — journalctl, /var/log', tag:'admin'},
+      ], resources:[
+        {label:'Bash Scripting Guide', href:'https://www.shellscript.sh'},
+      ]},
+      { title:'System Hardening', badge:'Month 5', skills:[
+        {name:'UFW firewall configuration', tag:'security'},
+        {name:'fail2ban and brute-force protection', tag:'security'},
+        {name:'SELinux / AppArmor basics', tag:'security'},
+        {name:'Build a LAMP stack from scratch', tag:'project'},
+        {name:'LPIC-1 or Linux+ certification prep', tag:'cert'},
+      ], resources:[
+        {label:'CompTIA Linux+', href:'https://www.comptia.org/certifications/linux'},
+      ]},
+    ]
+  },
+  {
+    id:'sysadm', label:'Sys Admin', icon:'⚙️', cls:'t-sysadm',
+    duration:'6–9 months',
+    desc:'Keep systems running, secure, and scalable. The invisible skill that makes everything else possible.',
+    phases:[
+      { title:'OS & Virtualization', badge:'Month 1–2', skills:[
+        {name:'Linux administration deep dive', tag:'linux'},
+        {name:'Windows Server fundamentals (AD, DHCP, DNS)', tag:'windows'},
+        {name:'VMs with VirtualBox or VMware', tag:'virt'},
+        {name:'Containers — Docker setup and management', tag:'containers'},
+        {name:'Disk management — LVM, RAID, partitioning', tag:'storage'},
+      ], resources:[
+        {label:'Red Hat System Administration I', href:'https://www.redhat.com/en/services/training/rh124-red-hat-system-administration-i'},
+      ]},
+      { title:'Services & Automation', badge:'Month 3–4', skills:[
+        {name:'Web servers — Nginx & Apache configuration', tag:'services'},
+        {name:'Email server setup (Postfix basics)', tag:'services'},
+        {name:'Ansible — playbooks and automation', tag:'automation'},
+        {name:'Bash & Python scripting for admin tasks', tag:'scripting'},
+        {name:'Backup strategies — 3-2-1 rule, rsync, tar', tag:'backup'},
+      ], resources:[
+        {label:'Ansible for Beginners', href:'https://docs.ansible.com/ansible/latest/getting_started/'},
+      ]},
+      { title:'Monitoring & Reliability', badge:'Month 5–7', skills:[
+        {name:'Prometheus + Grafana monitoring stack', tag:'monitoring'},
+        {name:'Log aggregation with ELK / Loki', tag:'monitoring'},
+        {name:'Uptime monitoring and alerting', tag:'ops'},
+        {name:'Capacity planning and performance tuning', tag:'ops'},
+        {name:'Disaster recovery planning', tag:'ops'},
+      ], resources:[
+        {label:'Grafana Labs Tutorials', href:'https://grafana.com/tutorials/'},
+      ]},
+      { title:'Certification & Projects', badge:'Month 8–9', skills:[
+        {name:'RHCSA or CompTIA Server+ prep', tag:'cert'},
+        {name:'Set up a production-grade home server', tag:'project'},
+        {name:'CI/CD pipeline integration for a real app', tag:'project'},
+        {name:'Security hardening of a Linux system', tag:'security'},
+        {name:'Document a runbook for a service outage', tag:'project'},
+      ], resources:[
+        {label:'RHCSA Exam Objectives', href:'https://www.redhat.com/en/services/certification/rhcsa'},
+      ]},
+    ]
+  },
+  {
+    id:'pentest', label:'Pentesting', icon:'🔓', cls:'t-pentest',
+    duration:'6–10 months',
+    desc:'Structured, methodical, authorized. Penetration testing is security engineering at its most applied.',
+    phases:[
+      { title:'Prerequisites', badge:'Month 1–2', skills:[
+        {name:'Linux & command line mastery', tag:'required'},
+        {name:'Networking fundamentals (TCP/IP, ports, protocols)', tag:'required'},
+        {name:'Python scripting for automation', tag:'required'},
+        {name:'Setting up Kali Linux', tag:'tools'},
+        {name:'Legal & ethical framework — written authorization', tag:'ethics'},
+      ], resources:[
+        {label:'TCM Security — Practical Ethical Hacking', href:'https://academy.tcm-sec.com'},
+      ]},
+      { title:'Methodology', badge:'Month 3–4', skills:[
+        {name:'PTES — Penetration Testing Execution Standard', tag:'framework'},
+        {name:'OWASP Testing Guide', tag:'framework'},
+        {name:'Reconnaissance phase deep dive', tag:'phase'},
+        {name:'Threat modeling and attack surface mapping', tag:'phase'},
+        {name:'Nmap, Masscan, Shodan for discovery', tag:'tools'},
+      ], resources:[
+        {label:'PTES Standard', href:'http://www.pentest-standard.org'},
+        {label:'OWASP Testing Guide', href:'https://owasp.org/www-project-web-security-testing-guide/'},
+      ]},
+      { title:'Exploitation Techniques', badge:'Month 5–7', skills:[
+        {name:'Web app pentesting — full OWASP Top 10 coverage', tag:'web'},
+        {name:'Network pentesting — SMB, FTP, SSH exploitation', tag:'network'},
+        {name:'Active Directory attacks — Kerberoasting, Pass-the-Hash', tag:'ad'},
+        {name:'Privilege escalation (Linux & Windows)', tag:'exploit'},
+        {name:'Custom payload crafting with msfvenom', tag:'tools'},
+      ], resources:[
+        {label:'HackTheBox — Active Directory paths', href:'https://hackthebox.com'},
+        {label:'PortSwigger Web Security', href:'https://portswigger.net/web-security'},
+      ]},
+      { title:'Reporting & OSCP', badge:'Month 8–10', skills:[
+        {name:'Professional pentest report writing', tag:'reporting'},
+        {name:'Executive summary vs technical findings', tag:'reporting'},
+        {name:'Remediation guidance writing', tag:'reporting'},
+        {name:'OSCP certification labs', tag:'cert'},
+        {name:'Complete 3 HackTheBox machines and write up all', tag:'project'},
+      ], resources:[
+        {label:'OSCP Certification', href:'https://www.offsec.com/courses/pen-200/'},
+      ]},
+    ]
+  },
+  {
+    id:'ml', label:'Machine Learning', icon:'🧠', cls:'t-ml',
+    duration:'6–10 months',
+    desc:'Build systems that learn from data. From regression to neural networks to production ML pipelines.',
+    phases:[
+      { title:'Math & Data Prep', badge:'Month 1–2', skills:[
+        {name:'Calculus — partial derivatives, chain rule', tag:'math'},
+        {name:'Linear algebra — matrix operations, eigenvalues', tag:'math'},
+        {name:'Probability — Bayes theorem, distributions', tag:'math'},
+        {name:'Pandas for data wrangling and exploration', tag:'data'},
+        {name:'Matplotlib & Seaborn for data visualization', tag:'viz'},
+      ], resources:[
+        {label:'Kaggle — ML Courses (free)', href:'https://www.kaggle.com/learn'},
+        {label:'3Blue1Brown Essence of Calculus', href:'https://www.3blue1brown.com/topics/calculus'},
+      ]},
+      { title:'Supervised Learning', badge:'Month 3–4', skills:[
+        {name:'Linear & logistic regression from scratch', tag:'core'},
+        {name:'Decision trees and random forests', tag:'core'},
+        {name:'SVMs — margin, kernels, soft margin', tag:'core'},
+        {name:'Cross-validation and hyperparameter tuning', tag:'practice'},
+        {name:'Evaluation metrics — AUC-ROC, F1, precision/recall', tag:'practice'},
+      ], resources:[
+        {label:'Hands-On ML (Aurélien Géron)', href:'https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/'},
+        {label:'Scikit-learn User Guide', href:'https://scikit-learn.org/stable/user_guide.html'},
+      ]},
+      { title:'Unsupervised & Deep Learning', badge:'Month 5–7', skills:[
+        {name:'K-Means, DBSCAN — clustering', tag:'unsupervised'},
+        {name:'PCA — dimensionality reduction', tag:'unsupervised'},
+        {name:'Neural network architecture & training', tag:'deep'},
+        {name:'CNNs for image tasks', tag:'deep'},
+        {name:'Transfer learning with pretrained models', tag:'deep'},
+      ], resources:[
+        {label:'fast.ai Practical Deep Learning', href:'https://course.fast.ai'},
+        {label:'PyTorch Docs', href:'https://pytorch.org/docs/stable/index.html'},
+      ]},
+      { title:'MLOps & Projects', badge:'Month 8–10', skills:[
+        {name:'Model deployment with FastAPI or Flask', tag:'deploy'},
+        {name:'MLflow for experiment tracking', tag:'mlops'},
+        {name:'Feature engineering & data pipelines', tag:'mlops'},
+        {name:'Kaggle competition — submit and iterate', tag:'project'},
+        {name:'End-to-end ML project with documentation', tag:'project'},
+      ], resources:[
+        {label:'MLflow Docs', href:'https://mlflow.org/docs/latest/index.html'},
+        {label:'Kaggle Competitions', href:'https://www.kaggle.com/competitions'},
+      ]},
+    ]
+  },
+  {
+    id:'robotics', label:'Robotics', icon:'🤖', cls:'t-robotics',
+    duration:'6–10 months',
+    desc:'Build machines that move and perceive. Bridging software and the physical world.',
+    phases:[
+      { title:'Foundations', badge:'Month 1–2', skills:[
+        {name:'Basic electronics — voltage, current, resistors, breadboards', tag:'electronics'},
+        {name:'Microcontrollers vs single-board computers', tag:'core'},
+        {name:'Introduction to ROS2 (Robot Operating System)', tag:'ros'},
+        {name:'Kinematics — forward and inverse basics', tag:'theory'},
+        {name:'Python for hardware interaction', tag:'programming'},
+      ], resources:[
+        {label:'ROS2 Beginner Tutorials', href:'https://docs.ros.org/en/humble/Tutorials.html'},
+        {label:'The Robotics Academy', href:'https://roboticsacademy.net/'},
+      ]},
+      { title:'Sensors & Actuation', badge:'Month 3–4', skills:[
+        {name:'Servo motors, DC motors, stepper motors', tag:'actuators'},
+        {name:'Ultrasonic, IR, LiDAR distance sensors', tag:'sensors'},
+        {name:'Camera integration and basic computer vision', tag:'vision'},
+        {name:'PWM signal generation and control', tag:'control'},
+        {name:'PID control theory and implementation', tag:'control'},
+      ], resources:[
+        {label:'OpenCV Python Tutorials', href:'https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html'},
+      ]},
+      { title:'Navigation & Autonomy', badge:'Month 5–7', skills:[
+        {name:'SLAM — Simultaneous Localization and Mapping', tag:'advanced'},
+        {name:'Path planning algorithms (A*, Dijkstra)', tag:'algo'},
+        {name:'ROS2 navigation stack (Nav2)', tag:'ros'},
+        {name:'Gazebo simulation for testing without hardware', tag:'tools'},
+        {name:'Coordinate transforms with tf2', tag:'ros'},
+      ], resources:[
+        {label:'Nav2 Documentation', href:'https://navigation.ros.org'},
+        {label:'Gazebo Sim', href:'https://gazebosim.org/home'},
+      ]},
+      { title:'Build & Compete', badge:'Month 8–10', skills:[
+        {name:'Design a robot chassis (CAD basics, 3D printing)', tag:'hardware'},
+        {name:'Integrate all sensors and build an autonomous demo', tag:'project'},
+        {name:'Document your robot — specs, code, architecture', tag:'project'},
+        {name:'Enter a robotics competition or club showcase', tag:'project'},
+        {name:'Explore ML on robot (object detection with YOLO)', tag:'advanced'},
+      ], resources:[
+        {label:'FreeCAD', href:'https://www.freecad.org'},
+        {label:'YOLO by Ultralytics', href:'https://docs.ultralytics.com'},
+      ]},
+    ]
+  },
+  {
+    id:'arduino', label:'Arduino', icon:'⚡', cls:'t-arduino',
+    duration:'2–5 months',
+    desc:'The fastest way from idea to physical prototype. Electronics meets programming on a tiny board.',
+    phases:[
+      { title:'Getting Started', badge:'Month 1', skills:[
+        {name:'What is Arduino? Uno, Nano, Mega — differences', tag:'core'},
+        {name:'Arduino IDE setup and first sketch (Blink)', tag:'tools'},
+        {name:'Digital vs analog pins', tag:'core'},
+        {name:'GPIO — reading buttons, driving LEDs', tag:'hands-on'},
+        {name:'Serial monitor for debugging', tag:'tools'},
+      ], resources:[
+        {label:'Arduino Official Docs', href:'https://docs.arduino.cc'},
+        {label:'Arduino Project Hub', href:'https://projecthub.arduino.cc'},
+      ]},
+      { title:'Sensors & Outputs', badge:'Month 2', skills:[
+        {name:'PWM — LED dimming, motor speed control', tag:'pwm'},
+        {name:'Servo motor control', tag:'actuators'},
+        {name:'Temperature & humidity (DHT11/22)', tag:'sensors'},
+        {name:'Ultrasonic distance sensor (HC-SR04)', tag:'sensors'},
+        {name:'I2C & SPI communication protocols', tag:'comms'},
+      ], resources:[
+        {label:'RandomNerdTutorials — Arduino', href:'https://randomnerdtutorials.com/projects-arduino/'},
+      ]},
+      { title:'Communication', badge:'Month 3–4', skills:[
+        {name:'Bluetooth with HC-05/HC-06 modules', tag:'comms'},
+        {name:'WiFi with ESP8266 / ESP32', tag:'comms'},
+        {name:'MQTT protocol — IoT messaging basics', tag:'iot'},
+        {name:'Send sensor data to a web dashboard', tag:'iot'},
+        {name:'Interrupt-driven programming', tag:'advanced'},
+      ], resources:[
+        {label:'ESP32 tutorials — randomnerdtutorials', href:'https://randomnerdtutorials.com/projects-esp32/'},
+      ]},
+      { title:'Projects', badge:'Month 5', skills:[
+        {name:'Weather station — sensors to screen to web', tag:'project'},
+        {name:'Line-following robot with IR sensors', tag:'project'},
+        {name:'Home automation controller', tag:'project'},
+        {name:'3D-printed enclosure for your build', tag:'project'},
+        {name:'Present your project at a club showcase', tag:'project'},
+      ], resources:[
+        {label:'Instructables — Arduino', href:'https://www.instructables.com/circuits/arduino/projects/'},
+      ]},
+    ]
+  },
+];
+
+// State
+const progress = {};
+
+function saveProgress(){
+  try{ localStorage.setItem('cgec_progress', JSON.stringify(progress)); }catch(e){}
+}
+function loadProgress(){
+  try{
+    const d = localStorage.getItem('cgec_progress');
+    if(d) Object.assign(progress, JSON.parse(d));
+  }catch(e){}
+}
+loadProgress();
+
+function buildUI(){
+  const grid = document.getElementById('trackGrid');
+  const area = document.getElementById('roadmapArea');
+
+  tracks.forEach((t,ti) => {
+    // Tab
+    const btn = document.createElement('button');
+    btn.className = `track-tab ${t.cls}`;
+    btn.id = `tab-${t.id}`;
+    btn.innerHTML = `<span class="tab-dot"></span><span class="tab-label">${t.label}</span>`;
+    btn.onclick = () => activateTrack(t.id);
+    grid.appendChild(btn);
+
+    // Panel
+    const panel = document.createElement('div');
+    panel.className = `track-panel ${t.cls}`;
+    panel.id = `panel-${t.id}`;
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'track-header';
+    hdr.innerHTML = `
+      <div class="track-icon">${t.icon}</div>
+      <div>
+        <h2>${t.label}</h2>
+        <p class="track-desc">${t.desc}</p>
+        <div class="duration-tag">Estimated: ${t.duration}</div>
+      </div>
+    `;
+    panel.appendChild(hdr);
+
+    // Progress
+    const pLabel = document.createElement('div');
+    pLabel.className = 'progress-label';
+    pLabel.id = `plabel-${t.id}`;
+    pLabel.innerHTML = '<span>Progress</span><span>0%</span>';
+    panel.appendChild(pLabel);
+
+    const pWrap = document.createElement('div');
+    pWrap.className = 'progress-bar-wrap';
+    const pBar = document.createElement('div');
+    pBar.className = 'progress-bar';
+    pBar.id = `pbar-${t.id}`;
+    pBar.style.width = '0%';
+    pWrap.appendChild(pBar);
+    panel.appendChild(pWrap);
+
+    // Phases
+    t.phases.forEach((ph, pi) => {
+      const phaseEl = document.createElement('div');
+      phaseEl.className = 'phase';
+      phaseEl.id = `phase-${t.id}-${pi}`;
+
+      const phHdr = document.createElement('div');
+      phHdr.className = 'phase-header';
+      phHdr.onclick = () => togglePhase(t.id, pi);
+      phHdr.innerHTML = `
+        <div class="phase-num">${String(pi+1).padStart(2,'0')}</div>
+        <div class="phase-title">${ph.title}</div>
+        <div class="phase-badge">${ph.badge}</div>
+        <div class="phase-toggle">▼</div>
+      `;
+      phaseEl.appendChild(phHdr);
+
+      const body = document.createElement('div');
+      body.className = 'phase-body';
+
+      const skillList = document.createElement('div');
+      skillList.className = 'skill-list';
+
+      ph.skills.forEach((sk, si) => {
+        const key = `${t.id}-${pi}-${si}`;
+        const item = document.createElement('div');
+        item.className = `skill-item${progress[key] ? ' done' : ''}`;
+        item.id = `skill-${key}`;
+        item.innerHTML = `
+          <div class="skill-check"></div>
+          <span class="skill-name">${sk.name}</span>
+          <span class="skill-tag">${sk.tag}</span>
+        `;
+        item.querySelector('.skill-check').onclick = (e) => {
+          e.stopPropagation();
+          progress[key] = !progress[key];
+          item.classList.toggle('done', progress[key]);
+          saveProgress();
+          updateProgress(t);
+        };
+        skillList.appendChild(item);
+      });
+
+      body.appendChild(skillList);
+
+      // Resources
+      if(ph.resources && ph.resources.length){
+        const resDiv = document.createElement('div');
+        resDiv.className = 'resources';
+        ph.resources.forEach(r => {
+          const a = document.createElement('a');
+          a.className = 'res-link';
+          a.href = r.href;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = '↗ ' + r.label;
+          resDiv.appendChild(a);
+        });
+        body.appendChild(resDiv);
+      }
+
+      phaseEl.appendChild(body);
+      panel.appendChild(phaseEl);
+    });
+
+    area.appendChild(panel);
+    updateProgress(t);
+  });
+
+  // Activate first
+  activateTrack(tracks[0].id);
+}
+
+function activateTrack(id){
+  document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.track-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`tab-${id}`).classList.add('active');
+  document.getElementById(`panel-${id}`).classList.add('active');
+  // Open first phase by default
+  const firstPhase = document.getElementById(`phase-${id}-0`);
+  if(firstPhase && !firstPhase.classList.contains('open')){
+    firstPhase.classList.add('open');
+  }
+}
+
+function togglePhase(tid, pi){
+  const el = document.getElementById(`phase-${tid}-${pi}`);
+  el.classList.toggle('open');
+}
+
+function updateProgress(t){
+  let total = 0, done = 0;
+  t.phases.forEach((ph, pi) => {
+    ph.skills.forEach((sk, si) => {
+      total++;
+      if(progress[`${t.id}-${pi}-${si}`]) done++;
+    });
+  });
+  const pct = total ? Math.round((done/total)*100) : 0;
+  const bar = document.getElementById(`pbar-${t.id}`);
+  const lbl = document.getElementById(`plabel-${t.id}`);
+  if(bar) bar.style.width = pct + '%';
+  if(lbl) lbl.innerHTML = `<span>${done}/${total} skills</span><span>${pct}%</span>`;
+}
+
+buildUI();
+</script>
+</body>
+</html>
